@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, User, Calendar, Clock, CreditCard, Mail, Phone } from 'lucide-react';
-import { members, memberships } from '../data/mockData';
+import { ArrowLeft, User, Calendar, Clock, CreditCard, Mail, Phone, Dumbbell } from 'lucide-react';
+import { members, memberships, trainers } from '../data/mockData';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import Badge from '../components/ui/Badge';
 import Button from '../components/ui/Button';
@@ -11,6 +11,7 @@ const MemberDetailsPage: React.FC = () => {
   const { id } = useParams();
   const member = members.find(m => m.id === id);
   const membership = memberships.find(m => m.id === member?.membershipId);
+  const assignedTrainer = trainers[0]; // In a real app, this would come from the member's data
 
   if (!member) {
     return (
@@ -58,6 +59,7 @@ const MemberDetailsPage: React.FC = () => {
                 <Badge variant={member.status === 'active' ? 'success' : member.status === 'pending' ? 'warning' : 'danger'}>
                   {member.status.charAt(0).toUpperCase() + member.status.slice(1)}
                 </Badge>
+                <span className="ml-2 text-sm text-gray-500">Member ID: {member.memberId}</span>
               </div>
             </div>
           </div>
@@ -131,6 +133,42 @@ const MemberDetailsPage: React.FC = () => {
                     </dd>
                   </div>
                 </dl>
+              </CardContent>
+            </Card>
+
+            <Card className="md:col-span-2">
+              <CardHeader>
+                <CardTitle>Assigned Trainer</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {assignedTrainer ? (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <img
+                        src={assignedTrainer.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(assignedTrainer.name)}&background=0EA5E9&color=fff`}
+                        alt={assignedTrainer.name}
+                        className="h-12 w-12 rounded-full"
+                      />
+                      <div className="ml-4">
+                        <p className="text-sm font-medium text-gray-900">{assignedTrainer.name}</p>
+                        <p className="text-sm text-gray-500">{assignedTrainer.specialization}</p>
+                      </div>
+                    </div>
+                    <Link to={`/trainers/${assignedTrainer.id}`}>
+                      <Button variant="outline" size="sm">
+                        View Trainer Profile
+                      </Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="text-center py-4">
+                    <Dumbbell className="mx-auto h-12 w-12 text-gray-400" />
+                    <p className="mt-2 text-sm text-gray-500">No trainer assigned</p>
+                    <Button variant="outline" size="sm" className="mt-4">
+                      Assign Trainer
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>

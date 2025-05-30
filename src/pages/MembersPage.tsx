@@ -9,15 +9,8 @@ const MembersPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <PageHeader 
-        title="Members" 
-        description="Manage your gym members"
-        action={
-          <Link to="/members/new">
-            <Button variant="primary" leftIcon={<UserPlus size={16} />}>
-              Add Member
-            </Button>
-          </Link>
-        }
+        title="Members / Trainers" 
+        description="Manage your gym members and trainers"
       />
       
       <MemberList />

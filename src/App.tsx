@@ -15,6 +15,8 @@ import DashboardPage from './pages/DashboardPage';
 import MembersPage from './pages/MembersPage';
 import AddMemberPage from './pages/AddMemberPage';
 import MemberDetailsPage from './pages/MemberDetailsPage';
+import AddTrainerPage from './pages/AddTrainerPage';
+import TrainerDetailsPage from './pages/TrainerDetailsPage';
 import MembershipsPage from './pages/MembershipsPage';
 import CreatePlanPage from './pages/CreatePlanPage';
 import AttendancePage from './pages/AttendancePage';
@@ -107,6 +109,22 @@ function App() {
             }
           />
           <Route
+            path="/trainers/new"
+            element={
+              <ProtectedRoute>
+                <AddTrainerPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/trainers/:id"
+            element={
+              <ProtectedRoute>
+                <TrainerDetailsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/memberships"
             element={
               <ProtectedRoute>
@@ -158,4 +176,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

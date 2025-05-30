@@ -1,5 +1,5 @@
 import React from 'react';
-import { Check, Edit } from 'lucide-react';
+import { Check, Edit, Trash2 } from 'lucide-react';
 import { Membership } from '../../types';
 import Button from '../ui/Button';
 import { cn } from '../../lib/utils';
@@ -8,9 +8,15 @@ interface MembershipCardProps {
   membership: Membership;
   isPopular?: boolean;
   onEdit?: (membership: Membership) => void;
+  onDelete?: (membership: Membership) => void;
 }
 
-const MembershipCard: React.FC<MembershipCardProps> = ({ membership, isPopular = false, onEdit }) => {
+const MembershipCard: React.FC<MembershipCardProps> = ({ 
+  membership, 
+  isPopular = false, 
+  onEdit,
+  onDelete
+}) => {
   return (
     <div className={cn(
       "relative rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md p-6 animate-enter",
@@ -49,14 +55,23 @@ const MembershipCard: React.FC<MembershipCardProps> = ({ membership, isPopular =
         ))}
       </ul>
       
-      <Button 
-        variant={isPopular ? "primary" : "outline"} 
-        className="w-full"
-        onClick={() => onEdit && onEdit(membership)}
-        leftIcon={<Edit size={16} />}
-      >
-        Edit Plan
-      </Button>
+      <div className="flex gap-2">
+        <Button 
+          variant={isPopular ? "primary" : "outline"} 
+          className="flex-1"
+          onClick={() => onEdit && onEdit(membership)}
+          leftIcon={<Edit size={16} />}
+        >
+          Edit Plan
+        </Button>
+        <Button 
+          variant="outline" 
+          className="text-red-500 hover:bg-red-50"
+          onClick={() => onDelete && onDelete(membership)}
+        >
+          <Trash2 size={16} />
+        </Button>
+      </div>
     </div>
   );
 };
